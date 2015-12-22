@@ -1,7 +1,7 @@
 /* See README.md */
-var forkExecWait = require('../lib/forkexec').forkExecWait;
-forkExecWait({
-    'argv': [ 'echo', 'hello', 'world' ]
+var forkExecWaitShell = require('../lib/forkexec').forkExecWaitShell;
+forkExecWaitShell({
+    'command': 'echo hello world'
 }, function (err, info) {
 	console.log(info);
 });

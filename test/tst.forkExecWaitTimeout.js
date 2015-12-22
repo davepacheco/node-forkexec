@@ -14,7 +14,7 @@ forkExecWait({
 	assert.ok(err instanceof Error);
 	assert.ok(info.error == err);
 	assert.equal(err.message,
-	    'exec "sleep 2": unexpectedly terminated by signal SIGKILL');
+	    'exec "sleep" "2": unexpectedly terminated by signal SIGKILL');
 	assert.ok(info.status === null);
 	assert.equal(info.signal, 'SIGKILL');
 	assert.ok(info.stdout === '');

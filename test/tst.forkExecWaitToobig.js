@@ -5,17 +5,24 @@ var done = false;
 process.on('exit', function () { assert.ok(done); });
 
 forkExecWait({
-    'argv': [ 'nonexistent', 'command' ]
+    'argv': [ 'echo', 'hello', 'world' ],
+    'maxBuffer': 5
 }, function (err, info) {
 	console.log(info);
 	assert.ok(!done);
 	done = true;
 	assert.ok(err instanceof Error);
 	assert.ok(info.error == err);
-	/* JSSTYLED */
-	assert.ok(/^exec "nonexistent" "command":/.test(err.message));
+	assert.equal(err.message,
+	    'exec "echo" "hello" "world": stdout maxBuffer exceeded.');
 	assert.ok(info.status === null);
+	/*
+	 * Node sends the process SIGKILL, but does not actually report that
+	 * back to us.
+	 */
 	assert.ok(info.signal === null);
-	assert.ok(info.stdout === '');
+	/*
+	 * We can't assume much about stdout.
+	 */
 	assert.ok(info.stderr === '');
 });
